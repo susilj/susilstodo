@@ -39,8 +39,8 @@ console.log(field, value);
 
     render() {
         return (
-            <fieldset >
-                <legend>Add new Todo</legend>
+            <div>
+                <h1>Add new Todo</h1>
                 <div>
                     <label>ID</label>
                     <input type="text" name="id" value={this.state.id} onChange={this.handleChange.bind(this, 'id')} />
@@ -62,7 +62,7 @@ console.log(field, value);
                     <input type="text" name="status" value={this.state.status} onChange={this.handleChange.bind(this, 'status')} />
                 </div>
                 <input type="button" onClick={this.Save.bind(this)} value="Save" />
-            </fieldset>
+            </div>
         );
     }
 }

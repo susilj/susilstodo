@@ -3,9 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import AWSAppSyncClient from "aws-appsync";
 import { Rehydrated } from 'aws-appsync-react';
-import { AUTH_TYPE } from "aws-appsync/lib/link/auth-link";
 import { graphql, ApolloProvider, compose } from 'react-apollo';
-import * as AWS from 'aws-sdk';
 import awsconfig from './aws-exports';
 import AllTodosQuery from './queries/getAllTodos';
 import NewTodoMutation from './queries/newTodoMutation';
@@ -13,22 +11,12 @@ import NewTodoSubscription from './queries/newTodoSubscription';
 import ListTodo from './Components/ListTodo';
 import AddTodo from './Components/AddTodo';
 
-AWS.config.update({
-  region: awsconfig.REGION,
-  credentials: new AWS.Credentials({
-    accessKeyId: awsconfig.AWS_ACCESS_KEY_ID,
-    secretAccessKey: awsconfig.AWS_SECRET_ACCESS_KEY
-  })
-});
-
 const client = new AWSAppSyncClient({
   url: awsconfig.ENDPOINT,
-  region: AWS.config.region,
+  region: awsconfig.region,
   auth: {
-    // type: AUTH_TYPE.AWS_IAM,
-    // credentials: AWS.config.credentials
-    type: AUTH_TYPE.API_KEY,
-    apiKey: 'da1-T7VpJ6Q4TNKX_OjipRSReA'
+    type: awsconfig.authenticationType,
+    apiKey: awsconfig.apiKey
   }
 });
 
@@ -40,12 +28,12 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <TodoWithData />
-        {/* <AddTodo /> */}
-        <NewTodoWithData />
+        <div className="App-intro">
+            <TodoWithData />
+            {/* <AddTodo /> */}
+            <NewTodoWithData />
+        </div>
+
       </div>
     );
   }
